@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<!-- 
+	UserManage DAO에서 읽어오는 xml 파일 
+	DB에서 가져와야 하는 자료들 : 모든 유저 리스트, 모든 신고 리스트, 모든 블랙 리스트 
+ -->
+<sqlMap namespace = "UserManage">
+
+	<typeAlias alias="userVo" type="vo.UserVO"/>
+	<typeAlias alias="reportVo" type="vo.ReportVO"/>
+	<typeAlias alias="blackVo" type="vo.BlackListVO"/>
+
+
+	<select id="getUserAll" resultClass="userVo">
+ 		select * from us
+ 	</select>
+ 	
+ 	<select id="getReportAll" resultClass="reportVo">
+ 		select * from report
+ 	</select>
+	
+	<select id="getBlackAll" resultClass="blackVo">
+ 		select * from blacklist
+ 	</select>
+ 	
+ 	<delete id = "delUser" parameterClass ="String">
+ 		delete from us where us_id = #us_id#
+ 	</delete>
+ 	
+ 	<update id="upUserRt" parameterClass="String">
+ 		update us
+		set us_rt_cn = us_rt_cn+1
+		where us_id = #us_id#
+ 	</update>
+ 	
+ 	<delete id ="delRt" parameterClass="String">
+ 		delete from report where re_id = #re_id#
+ 	</delete>
+ 	
+ 	<insert id="inBlist" parameterClass="String">
+ 		insert into blackList(blist_id , blist_elm_dt, blist_us_id)  
+		values (BLIST_SEQ.nextval, sysdate, #us_id#)
+ 	</insert>
+
+
+	
+ 	
+</sqlMap>

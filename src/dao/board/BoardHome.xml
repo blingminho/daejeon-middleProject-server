@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<!-- 
+	namespace는 이곳에 설정된 SQL문을 호출해서 사용할 때 같이 사용되는 이름이다.
+	(자바에서의 package와 비슷한 역할을 한다.)
+ -->
+<sqlMap namespace = "BoardHome">
+
+	<typeAlias alias="BoardVO" type="vo.BoardVO"/>
+
+	<select id="getAllBoard" resultClass="BoardVO">
+		select BD_ID, BD_US_ID, BD_DT, BD_NM from board order by bd_dt desc
+	</select>
+ 	
+ 	<select id="getBoardTitle" parameterClass="String" resultClass="BoardVo">
+ 		select * from board where bd_nm like '%' || #bd_name# || '%' order by bd_dt desc
+ 	</select>
+ 	
+ 	<select id="getBoardContent" parameterClass="String" resultClass="BoardVo">
+ 		select * from board where bd_content like '%' || #bd_content# || '%' order by bd_dt desc
+ 	</select>
+ 	
+ 	<select id="getBoardUserId" parameterClass="String" resultClass="BoardVo">
+ 		select * from board where bd_us_id like '%' || #bd_us_id# || '%' order by bd_dt desc
+ 	</select>
+</sqlMap>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<!-- 
+	namespace는 이곳에 설정된 SQL문을 호출해서 사용할 때 같이 사용되는 이름이다.
+	(자바에서의 package와 비슷한 역할을 한다.)
+ -->
+<sqlMap namespace = "TeamTravelList">
+
+	<typeAlias alias="TravelVO" type="vo.TravelListVO"/>
+
+	<select id="getTravelList" parameterClass="String" resultClass="TravelVO">
+		select * from travellist
+		where trv_tm_id = #trv_tm_id#
+	</select>
+ 	
+ 	<select id="getTravelOnSchedule" parameterClass="java.util.HashMap" resultClass="int">
+		select count(*) from travelList
+		where trv_id = (
+    	select cal_trv_id
+    	from calendar
+    	where cal_tm_id = #cal_tm_id#
+    	and cal_trv_id = #cal_trv_id#
+    	and rownum = 1)
+		and trv_tm_id = #trv_tm_id#
+	</select>
+ 	
+ 	<delete id="deleteTravel" parameterClass="String">
+ 		delete from travellist
+ 		where trv_id = #trv_id#
+ 	</delete>
+ 	
+ 	<insert id="insertTravel" parameterClass="TravelVO">
+ 		insert into travellist(TRV_ID, TRV_REP_IMG, TRV_ADD, TRV_NM, TRV_CTT_TP, TRV_PH, TRV_TM_ID)
+ 		values (#trv_id#, #trv_rep_img#, #trv_add#, #trv_nm#, #trv_ctt_tp#, #trv_ph#, #trv_tm_id#)
+ 	</insert>
+</sqlMap>

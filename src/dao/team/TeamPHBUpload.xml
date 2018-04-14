@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+
+<sqlMap namespace = "TeamPHBUpload">
+
+	<typeAlias alias="PhbVO" type="vo.PhbVO"/>
+	<typeAlias alias="FileVO" type="vo.FileVO"/>
+	
+	
+	<insert id="phbInsert" parameterClass="PhbVO">
+ 		insert into phb(phb_id, phb_tm_id, phb_us_id, phb_gd, phb_dt, phb_nm) 
+		values(phb_seq.NEXTVAL, #phb_tm_id#, #phb_us_id#, 0, sysdate, #phb_nm#)
+ 	</insert>
+ 	
+	<insert id="phbFileInsert" parameterClass="FileVO">
+ 		insert into fi(fi_id, fi_bd_id, fi_ct_id, fi_phb_id, fi_path) 
+		values(FI_SEQ.nextval, null, null, #fi_phb_id#, #fi_path#)
+ 	</insert>
+ 	
+ 	<update id="phbFileupdate" parameterClass="FileVO">
+ 		update fi
+		set fi_path = #fi_path#
+		where fi_phb_id = #fi_phb_id#
+ 	</update>
+ 	
+ 	<delete id="phbDel" parameterClass="String">
+ 		delete 
+		from phb
+		where phb_id = #phb_id#
+ 	</delete>
+ 	
+ 	<select id = "getPhbID" resultClass="String">
+ 		select phb_seq.currval from dual
+ 	</select>
+ 	
+ 	<select id = "getFiID" resultClass="String">
+ 		select fi_seq.currval from dual
+ 	</select>
+ 	
+ 	<select id = "selectPhbVo" parameterClass="String" resultClass="PhbVO">
+ 		select * from phb where phb_id = #phb_id#
+ 	</select>
+ 	
+
+</sqlMap>

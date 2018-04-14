@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<!-- 
+	namespace는 이곳에 설정된 SQL문을 호출해서 사용할 때 같이 사용되는 이름이다.
+	(자바에서의 package와 비슷한 역할을 한다.)
+ -->
+<sqlMap namespace = "MyList">
+
+	<typeAlias alias="TeamStatusVO" type="vo.TeamStatusVO"/>
+	
+
+	<select id="tabeSignedUpTeam" parameterClass="String" resultClass="TeamStatusVO" >
+		select DISTINCT  tm_id
+       					,tm_nm
+       					,jo_stt
+ 		from join, team
+		where join.jo_us_id= #us_id#
+  		and join.jo_tm_id = tm_id
+  		and join.jo_stt = 'W'
+  		
+	</select>
+	
+	<select id="tableInvitedTeam" parameterClass="String" resultClass="TeamStatusVO" >
+		select DISTINCT  tm_id
+       					,tm_nm
+       					,jo_stt
+ 		from join, team
+		where join.jo_us_id= #us_id#
+  		and join.jo_tm_id = tm_id
+		and join.jo_stt = 'I'
+	</select>
+	
+	<select id="tableEnrolledTeam" parameterClass="String" resultClass="TeamStatusVO" >
+		select DISTINCT  tm_id
+       					,tm_nm
+       					,jo_stt
+ 		from join, team
+		where join.jo_us_id= #us_id#
+  		and join.jo_tm_id = tm_id
+		and join.jo_stt = 'Y'
+	</select>
+ 	
+</sqlMap>

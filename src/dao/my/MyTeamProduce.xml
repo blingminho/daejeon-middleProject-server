@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<!-- 
+	namespace는 이곳에 설정된 SQL문을 호출해서 사용할 때 같이 사용되는 이름이다.
+	(자바에서의 package와 비슷한 역할을 한다.)
+ -->
+<sqlMap namespace = "MyTeamProduce">
+
+	<typeAlias alias="TeamVO" type="vo.TeamVO"/>
+
+ 	<insert id="insertTeam" parameterClass="TeamVO">
+ 		insert into team(TM_ID, TM_PN, TM_REC_ST_DT, TM_REC_ED_DT, TM_OP, TM_NM, TM_LD_ID, TM_PF)
+ 		values (#TM_ID#, #TM_PN#, #TM_REC_ST_DT#, #TM_REC_ED_DT#, #TM_OP#, #TM_NM#, #TM_LD_ID#, #TM_PF#)
+ 	</insert>
+
+</sqlMap>

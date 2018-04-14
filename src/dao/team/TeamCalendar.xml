@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<!-- 
+	namespace는 이곳에 설정된 SQL문을 호출해서 사용할 때 같이 사용되는 이름이다.
+	(자바에서의 package와 비슷한 역할을 한다.)
+ -->
+<sqlMap namespace = "TeamCalendar">
+
+	<typeAlias alias="CalendarVO" type="vo.CalendarVO"/>
+	<typeAlias alias="TeamVO" type="vo.TeamVO"/>
+
+	<select id="getJoinTeamIdList" parameterClass="String" resultClass="String">
+		select jo_tm_id from join
+		where jo_stt='Y' and jo_us_id = #jo_us_id#
+	</select>
+	
+	<select id="getTeamVO" parameterClass="String" resultClass="TeamVO">
+		select * from team
+		where tm_id = #tm_id#
+	</select>
+	
+	<select id="getCalendarBy_TM_ID" parameterClass="String" resultClass="CalendarVO">
+		select * from calendar
+		where cal_tm_id = #cal_tm_id#
+		order by cal_app_dt
+	</select>
+
+ 	<insert id="insertCalendar" parameterClass="CalendarVO">
+ 		insert into calendar(CAL_ID, CAL_TM_ID, CAL_APP_DT, CAL_TRV_ID, CAL_TRV_NM)
+ 		values (cal_seq.nextval, #cal_tm_id#, #cal_app_dt#, #cal_trv_id#, #cal_trv_nm#)
+ 	</insert>
+ 	
+ 	<delete id="deleteCalendar" parameterClass="CalendarVO">
+ 		delete from calendar
+ 		where cal_tm_id = #cal_tm_id# 
+		and cal_trv_id = #cal_trv_id# 
+		and cal_app_dt = #cal_app_dt# 
+ 	</delete>
+ 	
+ 	<select id="getCalendar" parameterClass="CalendarVO" resultClass="int">
+		select count(*) from calendar
+		where cal_tm_id = #cal_tm_id# 
+		and cal_trv_id = #cal_trv_id# 
+		and cal_app_dt = #cal_app_dt#
+	</select>
+ 	
+</sqlMap>

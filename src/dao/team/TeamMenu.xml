@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<!-- 
+	namespace는 이곳에 설정된 SQL문을 호출해서 사용할 때 같이 사용되는 이름이다.
+	(자바에서의 package와 비슷한 역할을 한다.)
+ -->
+<sqlMap namespace = "TeamMenu">
+	<select id="getJoinMemberState" parameterClass="java.util.HashMap" resultClass="String">
+		select jo_stt from join
+		where jo_us_id = #jo_us_id# and jo_tm_id = #jo_tm_id#
+	</select>
+ 	
+ 	<select id="getTeamLeaderId" parameterClass="String" resultClass="String">
+		select TM_LD_ID from TEAM
+		where tm_id = #tm_id#
+	</select>
+	<delete id="deleteTeamMemberSelf" parameterClass="java.util.HashMap">
+		delete from join
+		where jo_us_id = #jo_us_id# and jo_tm_id = #jo_tm_id#
+	</delete>
+</sqlMap>

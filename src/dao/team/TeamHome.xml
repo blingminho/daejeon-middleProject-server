@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<!-- 
+	namespace는 이곳에 설정된 SQL문을 호출해서 사용할 때 같이 사용되는 이름이다.
+	(자바에서의 package와 비슷한 역할을 한다.)
+ -->
+<sqlMap namespace = "TeamHome">
+
+	<typeAlias alias="TeamVO" type="vo.TeamVO"/>
+
+	<select id="getTeamMemberTotalCount" parameterClass="String" resultClass="int">
+		select count(*) from join
+		where jo_tm_id = #jo_tm_id# and jo_stt = 'Y'
+	</select>
+	
+	<select id="getTeamInfo" parameterClass="String" resultClass="TeamVO">
+		select * from team
+		where tm_id = #tm_id#
+	</select>
+	
+	<select id="getJoinMemberState" parameterClass="java.util.HashMap" resultClass="String">
+		select jo_stt from join
+		where jo_us_id = #jo_us_id# and jo_tm_id = #jo_tm_id#
+	</select>
+ 	
+ 	<delete id="deleteJoinMember" parameterClass="java.util.HashMap">
+ 		delete from join
+ 		where jo_us_id = #jo_us_id# and jo_tm_id = #jo_tm_id#
+ 	</delete>
+ 	
+ 	<insert id="insertJoinMemberWait" parameterClass="java.util.HashMap">
+ 		insert into join(JO_US_ID, JO_ID, JO_CT_ID, JO_STT, JO_TM_ID)
+ 		values (#jo_us_id#, JO_SEQ.NEXTVAL, ' ', 'W', #jo_tm_id#)
+ 	</insert>
+ 	
+ 	<update id="updateJoinMember" parameterClass="java.util.HashMap">
+ 		update join
+ 		set jo_stt = 'Y'
+ 		where jo_us_id = #jo_us_id# and jo_tm_id = #jo_tm_id#
+ 	</update>
+</sqlMap>

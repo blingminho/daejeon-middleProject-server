@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<!-- 
+	namespace는 이곳에 설정된 SQL문을 호출해서 사용할 때 같이 사용되는 이름이다.
+	(자바에서의 package와 비슷한 역할을 한다.)
+	myhomeDAO에서읽어오는 xml자료
+ -->
+<sqlMap namespace = "MyHome">
+
+	<typeAlias alias="UserVO" type="vo.UserVO"/>
+
+  	<select id="getUserInfo" parameterClass="String" resultClass="UserVO">
+  		select *from us 
+  		where us_id =#us_id#
+  	</select>
+  	
+  	<update id="updateUser" parameterClass="UserVO">
+ 		update us
+		set  us_mail= #us_mail#
+    		,us_pw = #us_pw#
+    		,us_ph = #us_ph#
+    		,us_bir = #us_bir#
+    		,us_pf = #us_pf# 
+		where us_id = #us_id#
+ 	</update>
+  	
+  	<delete id="deleteUser" parameterClass="String">
+  		update us
+  		set us_scs = 'Y'
+  		where us_id = #us_id#
+  	</delete>
+
+</sqlMap>

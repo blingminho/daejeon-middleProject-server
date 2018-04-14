@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<!-- 
+	namespace는 이곳에 설정된 SQL문을 호출해서 사용할 때 같이 사용되는 이름이다.
+	(자바에서의 package와 비슷한 역할을 한다.)
+ -->
+<sqlMap namespace = "BoardComent">
+
+	<typeAlias alias="BoardVO" type="vo.BoardVO"/>
+	<typeAlias alias="ComentVO" type="vo.ComentVO"/>
+	<typeAlias alias="UserVO" type="vo.UserVO"/>
+	<typeAlias alias="FileVO" type="vo.FileVO"/>
+	
+	<select id="getBoardInfo" parameterClass="String" resultClass="String">
+		select BD_CONTENT from board where bd_id = #bd_id#
+	</select>
+ 	
+ 	<insert id="setComent" parameterClass="ComentVO">
+ 		insert into coment (cm_id, cm_bd_id, cm_us_id, cm_dt, cm_content, cm_us_nm)
+ 		values(cm_seq.nextval, #cm_bd_id#, #cm_us_id#, sysdate, #cm_content#, #cm_us_nm#)
+ 	</insert>
+ 	
+ 	<select id="getUserInfo" parameterClass="String" resultClass="UserVO">
+ 		select us_id, us_nm from us where us_id = #us_id#
+ 	</select>
+ 	
+ 	<select id="getComentInfo" parameterClass="String" resultClass="ComentVO">
+ 		select * from coment where cm_bd_id = #cm_bd_id# order by cm_dt asc
+ 	</select>
+ 	
+ 	<delete id="deleteboard" parameterClass="String">
+ 		delete from board where bd_id = #bd_id#
+ 	</delete>
+ 	
+ 	<update id="updateBoard" parameterClass="BoardVO">
+ 		update board
+ 		set bd_content = #bd_content#
+ 		where bd_id = #bd_id#
+ 	</update>
+ 	
+ 	<select id="getFile" parameterClass="String" resultClass="FileVO">
+ 		select * from fi where fi_bd_id = #fi_bd_id#
+ 	</select>
+</sqlMap>

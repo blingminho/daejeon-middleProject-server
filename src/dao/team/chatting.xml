@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<!-- 
+	namespace는 이곳에 설정된 SQL문을 호출해서 사용할 때 같이 사용되는 이름이다.
+	(자바에서의 package와 비슷한 역할을 한다.)
+ -->
+<sqlMap namespace = "chatting">
+
+	<typeAlias alias="chattVo" type="vo.ChattingVO"/>
+	<typeAlias alias="userVo" type="vo.UserVO"/>
+	<typeAlias alias="reVo" type="vo.ReportVO"/>
+
+	<insert id="insertChatt" parameterClass="chattVo">
+		INSERT INTO CHATTING(CT_TM_ID , CT_ID , CT_US_ID , CT_CONTENT , CT_DT)
+		VALUES(#ct_tm_id#, CHAT_SEQ.NEXTVAL,#ct_us_id#,#ct_content#,sysdate)
+	</insert>
+	
+	<select id="getChattList" parameterClass="string" resultClass="chattVo">
+		select * from chatting where ct_tm_id = #sss# or ct_tm_id='ad' ORDER BY CT_DT asc
+	</select>
+	
+	<select id="getAllList" resultClass="chattVo">
+		select * from chatting ORDER BY CT_DT asc
+	</select>
+	
+	<insert id="insertReport" parameterClass="reVo">
+		insert into report values(re_seq.nextval,#re_cs#,#re_tm_id#,sysdate,#re_us_id#)
+	</insert>
+	
+	<select id="getMemberId" parameterClass="String" resultClass="String">
+		select ct_us_id from chatting where ct_tm_id=#sss# 
+	</select>
+	
+	<select id="getMemberName" parameterClass="String" resultClass="String">
+		select us_nm from us where us_id=#sss#
+	</select>
+ 	
+ 	
+ 	<select id="getTeamName" parameterClass="String" resultClass="String">
+ 		select tm_nm from team where tm_id = #sss#
+ 	</select>
+</sqlMap>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<!-- 
+	namespace는 이곳에 설정된 SQL문을 호출해서 사용할 때 같이 사용되는 이름이다.
+	(자바에서의 package와 비슷한 역할을 한다.)
+ -->
+<sqlMap namespace = "BoardWrite">
+
+	<typeAlias alias="BoardVO" type="vo.BoardVO"/>
+	<typeAlias alias="FileVO" type="vo.FileVO"/>
+
+<!--
+ 	<insert id="getBoardWrite" parameterClass="BoardVO">
+ 		insert into board (bd_id, bd_tm_id, bd_us_id, bd_cgr, bd_content, bd_date, bd_nm)
+ 		values(bd_seq.currentval, #bd_tm_id#, #bd_us_id#, #bd_cgr#, #bd_content#, sysdate, #bd_nm#)
+ 	</insert>
+ --> 	
+ 	<select id="getFileSeqNum" resultClass="String">
+ 		select fi_seq.nextval from dual
+ 	</select>
+ 	
+ 	<select id="getBoardSeqNum" resultClass="String">
+ 		select bd_seq.currval from dual
+ 	</select>
+ 	
+
+ 	<insert id="setFile" parameterClass="FileVO">
+ 		insert into fi (fi_id, fi_bd_id, fi_path)
+ 		values(#fi_id#, #fi_bd_id#, #fi_path#)
+ 	</insert>
+
+ 	 
+ 	<insert id="setBoard" parameterClass="BoardVO">
+ 		insert into board(bd_id, bd_tm_id, bd_us_id, bd_cgr, bd_content, bd_dt, bd_nm)
+ 		values(bd_seq.nextval, #bd_tm_id#, #bd_us_id#, #bd_cgr#, #bd_content#, sysdate, #bd_nm#)
+ 	</insert>
+ 	
+</sqlMap>
